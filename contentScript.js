@@ -1,11 +1,11 @@
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.extension.onRequest.addListener(function(request, sender, callback) {
     console.log("received request '" + request.method + "' from sender ", sender);
     if (request.method == "getSelection") {
-        sendResponse({
+        callback({
             data: window.getSelection().toString()
         });
     } else {
-        sendResponse({});
+        callback(null);
     }
 });
 
