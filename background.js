@@ -1,6 +1,9 @@
-var startReading = function(selectedText) {
-    chrome.tts.speak(selectedText);
+var startReading = function(text) {
+    console.log("speechify reading: '" + text + "'");
+    chrome.tts.speak(text);
 };
+
+/* context menu */
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function(response){
@@ -9,6 +12,14 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 });
 
 chrome.contextMenus.create({
-    title: "Start reading",
+    title: "Speechify",
     contexts: ["selection"]
+});
+
+/* browser action */
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function(response){
+        startReading(response.data);
+    });
 });
