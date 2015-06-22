@@ -44,11 +44,3 @@ chrome.contextMenus.create({
     title: "Speechify",
     contexts: ["selection"]
 });
-
-/* browser action */
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-    getTextInfo(tab, function(response){
-        startReading(response.text);
-    });
-});
