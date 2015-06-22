@@ -3,6 +3,7 @@ var startReading = function(response) {
         enqueue: true
     };
     var text = response.text;
+    text = text.replace(/\[\d*\]/g, "");
     var splitLength = 200;
     var utterances = [];
     var words = text.split(" ");
