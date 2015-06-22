@@ -3,11 +3,15 @@ var startReading = function(text) {
     chrome.tts.speak(text);
 };
 
+var getTextInfo = function(tab, callback) {
+    chrome.tabs.sendRequest(tab.id, { method: "getTextInfo" }, callback);
+};
+
 /* context menu */
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function(response){
-        startReading(response.data);
+    getTextInfo(tab, function(response){
+        startReading(response.text);
     });
 });
 
@@ -19,7 +23,7 @@ chrome.contextMenus.create({
 /* browser action */
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function(response){
-        startReading(response.data);
+    getTextInfo(tab, function(response){
+        startReading(response.text);
     });
 });

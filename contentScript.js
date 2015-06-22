@@ -1,8 +1,8 @@
 chrome.extension.onRequest.addListener(function(request, sender, callback) {
     console.log("received request '" + request.method + "' from sender ", sender);
-    if (request.method == "getSelection") {
+    if (request.method == "getTextInfo") {
         callback({
-            data: window.getSelection().toString()
+            text: window.getSelection().toString()
         });
     } else {
         callback(null);
