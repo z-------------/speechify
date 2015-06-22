@@ -1,6 +1,12 @@
-var startReading = function(text) {
-    console.log("speechify reading: '" + text + "'");
-    chrome.tts.speak(text);
+var startReading = function(response) {
+    var ttsOptions = {};
+    if (response.language) {
+        ttsOptions.lang = response.language;
+    }
+
+    chrome.tts.speak(response.text, ttsOptions);
+
+    console.log("speechify reading: '" + response.text + "' with options ", ttsOptions);
 };
 
 var getTextInfo = function(tab, callback) {
@@ -11,7 +17,7 @@ var getTextInfo = function(tab, callback) {
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     getTextInfo(tab, function(response){
-        startReading(response.text);
+        startReading(response);
     });
 });
 
